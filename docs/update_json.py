@@ -15,12 +15,12 @@ def list_files(directory):
 def generate_json(directory, output_file):
     """Generate a JSON file listing all files in the directory."""
     files = list_files(directory)
-    data = {"files": files}
+    data = files
 
     with open(output_file, "w", encoding="utf-8") as json_file:
         json.dump(data, json_file, indent=4)
 
-    print(f"✅ {output_file} has been created with {len(files)} files.")
+    print(f"{output_file} has been created with {len(files)} files.")
 
 if __name__ == "__main__":
     generate_json(DIRECTORY, OUTPUT_FILE)
