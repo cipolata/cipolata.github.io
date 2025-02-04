@@ -15,6 +15,9 @@ html, body {
 body {
   background-color: #333;
 }
+header {
+  color: #949494;
+}
 h1 {
   color: rgb(193, 189, 193);
   margin-left: 20px;
