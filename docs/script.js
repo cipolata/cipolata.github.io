@@ -4,17 +4,14 @@ const PATH = ""
 function show_image(src) {
     // Create a new image element
     let img = document.createElement("img");
-    img.classList.add("scroller")
-
     // Set the source, width, 
-    // height, and alt attributes
     img.src = src;
-    img.height = 200;
     // Append the image element
     // to the body of the document
     document.getElementById("gallery")
             .appendChild(img);
-}
+}            
+
 
 fetch('images.json')
     .then(response => response.json()) // Parse JSON
