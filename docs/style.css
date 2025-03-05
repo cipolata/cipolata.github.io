@@ -19,18 +19,20 @@ h1 {
   margin: 0;
   margin-bottom: 8px;
   text-align: center;
+  font-size: 20px;
 } 
 
 p {
     color: #949494;
     text-align: center;
-    font-size: 20px;
+    font-size: 12px;
 }
 a {
   color: #FFF;
   text-align: center;
   transition: color 0.25s ease-out;
   display: block;
+  font-size: 12px;
 }
 
 a:hover {
@@ -74,5 +76,14 @@ div.gallery img {
   }
   div.content {
     width: calc((100vw - 15px) / 9 * 5);
+  }
+  p {
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 30px;
+  } 
+  a {
+    font-size: 18px;
   }
 }
