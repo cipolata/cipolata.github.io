@@ -1,4 +1,3 @@
-document.body.style.overflow = "hidden";
 const PATH = ""
 
 function show_image(src) {
@@ -25,4 +24,4 @@ fetch('images.json')
     ) // Work with JSON data
     .catch(error => console.error('Error fetching JSON:', error));
 
-console.log("Script loaded successfully!");
+//console.log("Script loaded successfully!");
