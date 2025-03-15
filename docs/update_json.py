@@ -32,7 +32,7 @@ def image_scaling(directory, output_folder, quality):
     """Scale all images at directory and save them to output_folder."""
     files = list_files(directory)
     for file in files:
-        outfile = file.split('.')[0] + "_compressed.jpg"
+        outfile = file
         try:
             with Image.open(os.path.join(directory, file)) as im:
                 im.save(os.path.join(output_folder, outfile), quality = quality, optimize = True)
