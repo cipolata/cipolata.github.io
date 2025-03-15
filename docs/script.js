@@ -18,7 +18,7 @@ fetch('images.json')
                             .sort((a, b) => a.sort - b.sort)
                             .map(({ value }) => value))
     .then(data =>
-        data.map(filename => "images/".concat(filename))
+        data.map(filename => "res/".concat(filename))
             .forEach(img_path => 
                 show_image(PATH.concat(img_path)))
     ) // Work with JSON data
