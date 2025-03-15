@@ -11,7 +11,7 @@ OUTPUT_FILE = "images.json"
 OUTPUT_FOLDER = "./res/"
 
 # Scaling factor to scale images
-QUALITY_FACTOR = 5
+QUALITY_FACTOR = 25
 
 def list_files(directory):
     """List all files in the given directory (excluding subdirectories)."""
