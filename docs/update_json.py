@@ -36,7 +36,6 @@ def image_scaling(directory, output_folder, quality):
         try:
             with Image.open(os.path.join(directory, file)) as im:
                 im.save(os.path.join(output_folder, outfile), quality = quality, optimize = True)
-
         except OSError:
             print("cannot open", file)
 
