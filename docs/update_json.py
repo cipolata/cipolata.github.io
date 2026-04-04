@@ -41,5 +41,5 @@ def image_scaling(directory, output_folder, quality):
 
 
 if __name__ == "__main__":
-    #generate_json(DIRECTORY, OUTPUT_FILE)
+    generate_json(DIRECTORY, OUTPUT_FILE)
     image_scaling(DIRECTORY, OUTPUT_FOLDER, QUALITY_FACTOR)
