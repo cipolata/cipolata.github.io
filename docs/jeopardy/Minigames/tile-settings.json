@@ -1,6 +1,8 @@
 {
   "0:0": {
     "type": "question",
+    "questionText": "This is the shortcut for the move tool.",
+    "answerText": "What is \"W\"?",
     "jokerBonus": 500,
     "minigameUploaded": false
   },
@@ -13,5 +15,17 @@
     "type": "question",
     "questionText": "wär het dä song gschriebe",
     "answerText": "the smiths"
+  },
+  "3:0": {
+    "type": "question",
+    "questionText": "test",
+    "answerText": "test",
+    "jokerBonus": 500,
+    "minigameUploaded": false
+  },
+  "0:2": {
+    "type": "question",
+    "questionText": "Allgemeinwissen 600",
+    "answerText": "antwort"
   }
 }

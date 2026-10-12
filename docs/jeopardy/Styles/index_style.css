@@ -239,7 +239,8 @@ body{
   gap: 6px;
 }
 .group-count-options button,
-.start-game-button{
+.start-game-button,
+.edit-board-link{
   min-height: 38px;
   border: 1px solid rgb(255, 204, 0);
   background: transparent;
@@ -249,9 +250,17 @@ body{
 }
 .group-count-options button[aria-pressed="true"],
 .group-count-options button:hover,
-.start-game-button:hover{
+.start-game-button:hover,
+.edit-board-link:hover{
   background: rgb(255, 204, 0);
   color: #102770;
+}
+.edit-board-link{
+  display: block;
+  margin-top: 10px;
+  padding: 9px 0;
+  text-align: center;
+  text-decoration: none;
 }
 .group-name-form{
   margin-top: 12px;

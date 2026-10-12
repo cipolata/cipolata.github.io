@@ -9,7 +9,7 @@ This is a dynamic implementation of the game, where the number of players can be
 You can see this project in action on a hosted [Repl](https://jeopardygame.troop129.repl.co/).
 
 ## Run Locally
-Run `npm install` and then `npm start` from the project folder. Open `http://127.0.0.1:4173/`. PDF uploads are stored in `Pdf/`. To edit tiles, open a game link ending in `/dev`, such as `http://127.0.0.1:4173/Pages/game.html?teams=2/dev`. Question tiles support PDF, MP4 video, and MP3 audio alongside the written prompt; each media file is limited to 100 MB and stored in `QuestionMedia/`. Each tile can also be an uploaded standalone HTML Minigame or a Joker with a configurable bonus (default 500). Two Daily Doubles are placed randomly on eligible Question tiles each regular game. Tile settings are saved in `Minigames/tile-settings.json`, and minigame HTML files are stored in `Minigames/`.
+From this directory, run `npm install` and then `npm start`. Open `http://127.0.0.1:4173/` and choose **Edit Board** to edit tiles and upload content. The editor requires this Node server; static servers such as `python -m http.server` cannot save uploads. PDF uploads are stored in `Pdf/`. Question tiles support PDF, MP4 video, and MP3 audio alongside the written prompt; each media file is limited to 100 MB and stored in `QuestionMedia/`. Each tile can also be an uploaded standalone HTML Minigame or a Joker with a configurable bonus (default 500). Two Daily Doubles are placed randomly on eligible Question tiles each regular game. Tile settings are saved in `Minigames/tile-settings.json`, and minigame HTML files are stored in `Minigames/`.
 
 ## How it Works
 In this implementation, the user starts on a landing page where they can select how many players are playing.

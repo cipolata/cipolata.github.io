@@ -1,4 +1,4 @@
-var categories = ['Allgemeinwissen', 'Bindestrich', 'Als', 'Film', 'Musik', 'Pfadi'];
+var categories = ['Allgemeinwissen', 'Bindestrich', 'Als', 'Kultur', 'Musik', 'Pfadi'];
 var questions = [
   ['This is the shortcut for the move tool.', 
   'This needs to be done before starting the LEGO™ micro-game.', 
