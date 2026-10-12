@@ -1,0 +1,103 @@
+<html>
+<head>
+	<link rel="stylesheet" href="Styles/index_style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="Media/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="Media/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="Media/favicon/favicon-16x16.png">
+  <link rel="manifest" href="Media/favicon/site.webmanifest">
+	<link rel="stylesheet" href="https://use.typekit.net/gdu4kgx.css">
+</head>
+
+<body>
+  <title>Jeopardy! - Home</title>
+	<script>
+		var selectedGroupCount = 0;
+
+		function selectGroupCount(count) {
+			selectedGroupCount = count;
+			document.getElementById('groupNameHeading').textContent = 'Name your ' + count + ' groups';
+			var fields = document.getElementById('groupNames');
+			fields.replaceChildren();
+			var defaultColors = ['#d94f70', '#1976d2', '#4f8b3d', '#8c5ac7', '#d18421'];
+			for (var i = 1; i <= count; i++) {
+				var group = document.createElement('div');
+				group.className = 'group-name-row';
+				var label = document.createElement('label');
+				label.setAttribute('for', 'groupName' + i);
+				label.textContent = 'Group ' + i;
+				var input = document.createElement('input');
+				input.type = 'text';
+				input.id = 'groupName' + i;
+				input.maxLength = 24;
+				input.autocomplete = 'off';
+				input.placeholder = 'Group ' + i;
+				input.value = localStorage.getItem('jeopardy-group-' + i) || 'Team ' + i;
+				var colorLabel = document.createElement('label');
+				colorLabel.className = 'color-picker-label';
+				colorLabel.setAttribute('for', 'groupColor' + i);
+				colorLabel.textContent = 'Color for Group ' + i;
+				var colorInput = document.createElement('input');
+				colorInput.type = 'color';
+				colorInput.className = 'group-color-input';
+				colorInput.id = 'groupColor' + i;
+				colorInput.value = localStorage.getItem('jeopardy-color-' + i) || defaultColors[i - 1];
+				group.appendChild(label);
+				group.appendChild(input);
+				group.appendChild(colorLabel);
+				group.appendChild(colorInput);
+				fields.appendChild(group);
+			}
+			document.getElementById('groupNameForm').hidden = false;
+			document.querySelectorAll('[data-group-count]').forEach(function (button) {
+				button.setAttribute('aria-pressed', (Number(button.dataset.groupCount) === count).toString());
+			});
+			document.getElementById('groupName1').focus();
+		}
+
+		function startGame() {
+			if (!selectedGroupCount) {
+				return;
+			}
+			var gameUrl = new URL('Pages/game.html', new URL('./', document.location.href));
+			gameUrl.searchParams.set('teams', selectedGroupCount);
+			for (var i = 1; i <= selectedGroupCount; i++) {
+				var name = document.getElementById('groupName' + i).value.trim() || 'Team ' + i;
+				name = name.slice(0, 24);
+				var color = document.getElementById('groupColor' + i).value;
+				localStorage.setItem('jeopardy-group-' + i, name);
+				localStorage.setItem('jeopardy-color-' + i, color);
+				gameUrl.searchParams.set('name' + i, name);
+				gameUrl.searchParams.set('color' + i, color);
+			}
+			document.location.href = gameUrl.href;
+		}
+	</script>
+	<div class="title">
+		<h1 class="titlei">LW 2026 Pfadi500!</h1>
+	</div>
+	<div class="sec-center">
+		<input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+	  	<label class="for-dropdown" for="dropdown">Start Game <i class="uil uil-arrow-down"></i></label>
+  		<div class="section-dropdown"> 
+	  		<div class="group-count-options" aria-label="Number of groups">
+	  			<button type="button" data-group-count="2" aria-pressed="false">2 groups</button>
+	  			<button type="button" data-group-count="3" aria-pressed="false">3 groups</button>
+	  			<button type="button" data-group-count="4" aria-pressed="false">4 groups</button>
+	  			<button type="button" data-group-count="5" aria-pressed="false">5 groups</button>
+	  		</div>
+	  		<form id="groupNameForm" class="group-name-form" onsubmit="startGame(); return false;" hidden>
+	  			<h2 id="groupNameHeading"></h2>
+	  			<div id="groupNames" class="group-name-fields"></div>
+	  			<button type="submit" class="start-game-button">Start Game</button>
+	  		</form>
+  		</div>
+</div>
+<script>
+	document.querySelectorAll('[data-group-count]').forEach(function (button) {
+		button.addEventListener('click', function () {
+			selectGroupCount(Number(button.dataset.groupCount));
+		});
+	});
+</script>
+</body>
+</html>

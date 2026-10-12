@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Money - Das Spiel</title>
+    <style>
+        :root {
+            --bg-color: #071424;
+            --board-color: #0d2b45;
+            --accent-color: #ffaa00;
+            --text-color: #ffffff;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--board-color);
+            border: 4px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+        }
+        h1 {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .timer-panel {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff3333;
+            background: #000;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 5px;
+            border: 2px solid #555;
+            margin: 10px 0;
+        }
+        .question-box {
+            font-size: 1.4rem;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            min-height: 40px;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .player-column {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+        .player-column h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #001122;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 5px solid var(--accent-color);
+            min-height: 24px;
+        }
+        .points {
+            font-weight: bold;
+            color: var(--accent-color);
+            background: #000;
+            padding: 2px 8px;
+            border-radius: 3px;
+            min-width: 25px;
+            text-align: center;
+        }
+        .total-box {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .total-score {
+            color: #00ff00;
+            background: #000;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            background-color: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        button:hover {
+            background-color: #ffe066;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #555;
+            color: #aaa;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .input-area {
+            margin-top: 15px;
+            display: none;
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--accent-color);
+            background: #fff;
+            color: #000;
+        }
+        input[type="text"] { width: 60%; }
+        input[type="number"] { width: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Fast Money</h1>
+    <div>Erreiche gemeinsam 200 Punkte zum Sieg!</div>
+
+    <div class="timer-panel" id="timerDisplay">20</div>
+
+    <div class="question-box" id="questionDisplay">Klicke auf "Spiel Starten", um zu beginnen.</div>
+
+    <div class="board">
+        <!-- Spieler 1 -->
+        <div class="player-column">
+            <h3>Spieler 1</h3>
+            <div id="p1-rows">
+                <div class="row"><span class="ans">-</span><span class="points" id="p1-pts-0">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p1-pts-1">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p1-pts-2">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p1-pts-3">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p1-pts-4">0</span></div>
+            </div>
+        </div>
+
+        <!-- Spieler 2 -->
+        <div class="player-column">
+            <h3>Spieler 2</h3>
+            <div id="p2-rows">
+                <div class="row"><span class="ans">-</span><span class="points" id="p2-pts-0">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p2-pts-1">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p2-pts-2">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p2-pts-3">0</span></div>
+                <div class="row"><span class="ans">-</span><span class="points" id="p2-pts-4">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="total-box">
+        Gesamtpunktzahl: <span class="total-score" id="totalScore">0</span>
+    </div>
+
+    <!-- Eingabemaske für den Moderator -->
+    <div class="input-area" id="inputArea">
+        <label id="inputLabel" style="font-weight: bold; display:block; margin-bottom: 8px;"></label>
+        <input type="text" id="answerInput" placeholder="Antwort eingeben..." autocomplete="off">
+        <input type="number" id="pointsInput" placeholder="Pts" min="0" max="100" value="0">
+        <button onclick="submitAnswer()">Antwort loggen</button>
+    </div>
+
+    <div class="controls">
+        <button id="startBtn" onclick="startPlayer(1)">Spieler 1 Start (20s)</button>
+        <button id="p2Btn" onclick="startPlayer(2)" disabled>Spieler 2 Start (25s)</button>
+        <button id="revealBtn" onclick="revealScores()" disabled>Punkte auflösen</button>
+        <button onclick="resetGame()" style="background-color: #ff3333; color: white;">Reset</button>
+    </div>
+</div>
+
+<script>
+    // Beispiel-Fragenkatalog
+    const questions = [
+        "Nenne etwas, das man verliert.",
+        "Nenne ein Tier, das Winterschlaf hält.",
+        "Nenne ein beliebtes Urlaubsland der Deutschen.",
+        "Nenne ein Schulfach, das fast jeder mal gehasst hat.",
+        "Nenne etwas, das rund ist."
+    ];
+
+    let currentInitialTime = 20;
+    let timeLeft = 20;
+    let timerInterval = null;
+    let activePlayer = 0; // 1 oder 2
+    let currentQuestionIdx = 0;
+
+    // Speicher für die Antworten
+    let gameData = {
+        p1: { answers: [], points: [] },
+        p2: { answers: [], points: [] }
+    };
+
+    function startPlayer(playerNum) {
+        activePlayer = playerNum;
+        currentQuestionIdx = 0;
+        timeLeft = playerNum === 1 ? 20 : 25;
+        document.getElementById("timerDisplay").innerText = timeLeft;
+        
+        document.getElementById("startBtn").disabled = true;
+        document.getElementById("p2Btn").disabled = true;
+        
+        // Input-Feld für Moderator aktivieren
+        document.getElementById("inputArea").style.display = "block";
+        
+        nextQuestion();
+        
+        // Timer starten
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timerDisplay").innerText = timeLeft;
+            if (timeLeft <= 0) {
+                endTurn();
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIdx < questions.length) {
+            document.getElementById("questionDisplay").innerText = `Frage ${currentQuestionIdx + 1}: ${questions[currentQuestionIdx]}`;
+            document.getElementById("inputLabel").innerText = `Antwort für Spieler ${activePlayer} (Frage ${currentQuestionIdx + 1}):`;
+            document.getElementById("answerInput").value = "";
+            document.getElementById("pointsInput").value = "0";
+            document.getElementById("answerInput").focus();
+        } else {
+            endTurn();
+        }
+    }
+
+    function submitAnswer() {
+        const ans = document.getElementById("answerInput").value.trim() || "Keine Antwort / Pass";
+        const pts = parseInt(document.getElementById("pointsInput").value) || 0;
+
+        const pKey = 'p' + activePlayer;
+        gameData[pKey].answers.push(ans);
+        gameData[pKey].points.push(pts);
+
+        // Sofortige Anzeige des Textes im Board (Punkte bleiben vorerst visuell auf 0 bis zum Reveal)
+        const rows = document.getElementById(`${pKey}-rows`).getElementsByClassName("row");
+        rows[currentQuestionIdx].querySelector(".ans").innerText = ans;
+
+        currentQuestionIdx++;
+        nextQuestion();
+    }
+
+    function endTurn() {
+        clearInterval(timerInterval);
+        document.getElementById("timerDisplay").innerText = "Zeit um!";
+        document.getElementById("inputArea").style.display = "none";
+        
+// Wenn noch nicht alle Fragen beantwortet wurden (Zeit abgelaufen), Reste auffüllen
+const pKey = 'p' + activePlayer;
+while(gameData[pKey].answers.length < questions.length) {
+gameData[pKey].answers.push("Keine Antwort (Zeit)");
+gameData[pKey].points.push(0);
+const rows = document.getElementById(${pKey}-rows).getElementsByClassName("row");
+rows[gameData[pKey].answers.length - 1].querySelector(".ans").innerText = "X (Keine Antwort)";
+}
+if (activePlayer === 1) {
+document.getElementById("questionDisplay").innerText = "Spieler 1 fertig! Spieler 2 wegschicken und vorbereiten.";
+document.getElementById("p2Btn").disabled = false;
+} else {
+document.getElementById("questionDisplay").innerText = "Runden beendet! Bereit für die Punkteauflösung.";
+document.getElementById("revealBtn").disabled = false;
+}
+}
+function revealScores() {
+let total = 0;
+// Spieler 1 Punkte aufdecken
+for(let i=0; i<questions.length; i++) {
+document.getElementById(p1-pts-${i}).innerText = gameData.p1.points[i];
+total += gameData.p1.points[i];
+}
+// Spieler 2 Punkte aufdecken
+for(let i=0; i<questions.length; i++) {
+document.getElementById(p2-pts-${i}).innerText = gameData.p2.points[i];
+total += gameData.p2.points[i];
+}
+document.getElementById("totalScore").innerText = total;
+document.getElementById("revealBtn").disabled = true;
+if (total >= 200) {
+document.getElementById("questionDisplay").innerText = 🎉 GEWONNEN! Ihr habt ${total} Punkte erreicht! 🎉;
+} else {
+document.getElementById("questionDisplay").innerText = Schade! Nur ${total} Punkte. Ihr braucht 200 zum Hauptgewinn.;
+}
+}
+function resetGame() {
+clearInterval(timerInterval);
+gameData = { p1: { answers: [], points: [] }, p2: { answers: [], points: [] } };
+activePlayer = 0;
+currentQuestionIdx = 0;
+document.getElementById("timerDisplay").innerText = "20";
+document.getElementById("questionDisplay").innerText = "Klicke auf 'Spiel Starten', um zu beginnen.";
+document.getElementById("totalScore").innerText = "0";
+document.getElementById("startBtn").disabled = false;
+document.getElementById("p2Btn").disabled = true;
+document.getElementById("revealBtn").disabled = true;
+document.getElementById("inputArea").style.display = "none";
+// Board leeren
+const allAns = document.querySelectorAll(".ans");
+allAns.forEach(el => el.innerText = "-");
+const allPts = document.querySelectorAll(".points");
+allPts.forEach(el => el.innerText = "0");
+}

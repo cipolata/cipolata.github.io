@@ -1,0 +1,11 @@
+{
+  "name": "jeopardy-game",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "pdfjs-dist": "4.10.38"
+  }
+}

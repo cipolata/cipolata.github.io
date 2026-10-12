@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+	<link rel="stylesheet" href="../Styles/game_style.css">
+	<link rel="stylesheet" href="https://use.typekit.net/gdu4kgx.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="../Media/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../Media/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../Media/favicon/favicon-16x16.png">
+	<link rel="manifest" href="../Media/favicon/site.webmanifest">
+	<title>Pfadi 500!</title>
+</head>
+
+<body>
+	<title>Pfadi500! - Game</title>
+  <!-- <audio autoplay loop id="background_audio">
+    <source src="../Media/jtheme.mp3" type="audio/mpeg">
+  </audio> -->
+	<div class="container-fluid">
+		<center>
+			<table class="top-table">
+				<td class="top-title">
+					<div class="title">
+						<a href="../index.html"><h1 class="title">Pfadi 500!</h1></a>
+					</div>
+				</td>
+				<td class="top-turn">
+					<h2 class="team-order" id="teamTurn"></h2>
+				</td>
+				<td class="top-scoreboard">
+					<div class="text-center" id="scoreboard">
+						<center>
+							<table class="styled-table">
+								<thead>
+									<tr id="scoreboard-header">
+										<th>Team 1</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="scoreboard-data">
+										<td class="s-table-text" id="t1">0</td>
+									</tr>
+								</tbody>
+							</table>
+						</center>
+					</div>
+				</td>
+			</table>
+		</center>
+	</div>
+	<div class="row" id="gameBoard"></div>
+
+	<div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true"
+	 data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title text-center" id="questionModalLabel">Question</h2>
+					<button type="button" class="close" id="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<div class="dev-tile-editor d-none" id="dev-tile-editor">
+						<div class="tile-type-options" role="group" aria-label="Tile type">
+							<button type="button" data-tile-type="question" aria-pressed="false">Question</button>
+							<button type="button" data-tile-type="minigame" aria-pressed="false">Minigame</button>
+							<button type="button" data-tile-type="joker" aria-pressed="false">Joker</button>
+						</div>
+						<p class="dev-tile-status" id="dev-tile-status" role="status"></p>
+						<div class="written-question-editor d-none" id="written-question-editor">
+							<label for="written-question-input">Written question</label>
+							<textarea id="written-question-input" rows="3" maxlength="10000"></textarea>
+							<label for="written-answer-input">Written answer</label>
+							<textarea id="written-answer-input" rows="2" maxlength="10000"></textarea>
+							<button type="button" id="save-written-question">Save question and answer</button>
+						</div>
+						<div class="minigame-upload-controls d-none" id="minigame-upload-controls">
+							<label for="minigame-file">Standalone HTML minigame</label>
+							<input type="file" id="minigame-file" accept=".html,text/html">
+							<button type="button" class="pdf-clear" id="clear-minigame">Clear</button>
+							<span id="minigame-file-name">No minigame uploaded</span>
+						</div>
+						<div class="joker-config d-none" id="joker-config">
+							<label for="joker-bonus">Joker bonus points</label>
+							<input type="number" id="joker-bonus" min="1" max="100000" step="1" value="500">
+						</div>
+						<div class="question-media-upload-controls d-none" id="question-media-upload-controls">
+							<div class="question-media-upload-row">
+								<label for="question-video-file">Question video (MP4)</label>
+								<input type="file" id="question-video-file" accept=".mp4,video/mp4">
+								<button type="button" class="pdf-clear" data-clear-question-media="video">Clear</button>
+								<span id="question-video-name">No video uploaded</span>
+							</div>
+							<div class="question-media-upload-row">
+								<label for="question-audio-file">Question audio (MP3)</label>
+								<input type="file" id="question-audio-file" accept=".mp3,audio/mpeg">
+								<button type="button" class="pdf-clear" data-clear-question-media="audio">Clear</button>
+								<span id="question-audio-name">No audio uploaded</span>
+							</div>
+						</div>
+					</div>
+					<p class="card-text"></p>
+					<div class="pdf-preview d-none" id="pdf-preview"></div>
+					<div class="question-media-playback d-none" id="question-media-playback"></div>
+					<div class="pdf-upload-controls d-none" id="pdf-upload-controls">
+						<div class="pdf-folder-controls">
+							<span id="pdf-folder-status">PDFs save automatically to Pdf/</span>	
+						</div>
+						<div class="pdf-upload-row">
+							<label for="question-pdf">Question PDF</label>
+							<input type="file" id="question-pdf" data-pdf-type="question" accept=".pdf,application/pdf">
+							<button type="button" class="pdf-clear" data-pdf-clear="question">Clear</button>
+							<span class="pdf-file-name" id="question-pdf-name">Using typed question</span>
+						</div>
+						<div class="pdf-upload-row">
+							<label for="answer-pdf">Answer PDF</label>
+							<input type="file" id="answer-pdf" data-pdf-type="answer" accept=".pdf,application/pdf">
+							<button type="button" class="pdf-clear" data-pdf-clear="answer">Clear</button>
+							<span class="pdf-file-name" id="answer-pdf-name">Using typed answer</span>
+						</div>
+					</div>
+				</div>
+        <div class="modal-team-selector" id="modal-team-selector">
+					<label for="teams">Buzzed In:</label>
+          <select name="teams" id="team-selector">
+            <option value="1">Team 1</option>
+          </select>
+				</div>
+        <div class="daily-double" id="daily-double">
+          <p class="card-text"></p>
+        </div>
+				<div class="modal-footer" id="modal-footer">
+					<button type="button" class="btn btn-primary" id="reveal">Reveal Answer (space)</button>
+					<button type="button" class="btn btn-danger" id="incorrect">Incorrect (z)</button>
+					<button type="button" class="btn btn-success" id="correct">Correct (c)</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <br>
+  <center>
+    <button id="audioControl" class="button-special">Mute Music</button>
+    <button id = "toggleBtns" class="button-special">Turn off Buttons</button>
+  </center>
+  <br>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
+	<script type="module" src="../Scripts/pdf-renderer.js"></script>
+    <script src="../Scripts/gamescript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "0:0": {
+    "type": "question",
+    "jokerBonus": 500,
+    "minigameUploaded": false
+  },
+  "1:0": {
+    "type": "joker",
+    "jokerBonus": 500,
+    "minigameUploaded": true
+  },
+  "4:1": {
+    "type": "question",
+    "questionText": "wär het dä song gschriebe",
+    "answerText": "the smiths"
+  }
+}

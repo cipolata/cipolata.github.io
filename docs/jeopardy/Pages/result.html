@@ -1,0 +1,57 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="../Styles/result_style.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="../Media/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../Media/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../Media/favicon/favicon-16x16.png">
+	<link rel="manifest" href="../Media/favicon/site.webmanifest">
+	<link rel="stylesheet" href="https://use.typekit.net/gdu4kgx.css">
+</head>
+
+<body id="bod" class="confetti">
+	<script>
+		var isConfetti = true;
+		function toggleConfetti(){
+      if (isConfetti){
+        document.getElementById('bod').classList.remove("confetti");
+        document.getElementById('btn1').innerHTML = "Turn on confetti";
+        isConfetti = false;
+      }else{
+        document.getElementById('bod').classList.add("confetti");
+        document.getElementById('btn1').innerHTML = "Turn off confetti";
+        isConfetti = true;
+      }
+    }
+
+    function goHome(){
+      document.location.href = "../index.html"
+    }
+	</script>
+
+	<title>Jeopardy! - Game Over</title>
+  <div id="page-containter">
+    <div id="content-wrap">
+      <h1 class="title">Game Over!</h1>
+      <h1 class="subtitle">Danke fürs Spiele!</h1>
+
+      <h3 class="winner-setup">Gwunne hett:</h3>
+      <h2 class="winner" id="winner-team">..</h2>
+      <h3 class="winner-setup">With a score of:</h3>
+      <h2 class="winner" id="winner-score">..</h2>
+
+      <h3 class="others">Congrats to our other players:</h3>
+
+      <script src="../Scripts/result.js"></script>
+
+      <button id = "btn1" class="turn-off" onclick="toggleConfetti()">Turn off confetti</button>
+
+      <center><button href="../index.html" class="button" onclick="goHome()">Home</button></center>
+    </div>
+  </div>
+  <footer>
+      <p>Game by Abid Rasheed, Nitin Kanchi, Jhonathan Herman, Liam Taylor, and Connor Healy.</p>
+    </footer>
+</body> 
+
+</html>
